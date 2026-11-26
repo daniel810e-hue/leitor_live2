@@ -1,17 +1,28 @@
 #!/data/data/com.termux/files/usr/bin/bash
-# Instalador do leitor_live_site2.py (Termux)
 
-cd "$(dirname "$0")" || exit 1
+# ===== MUDE SÓ ESTAS 5 LINHAS =====
+USUARIO="daniel810e-hue"
+REPO="leitor_live2"
+COMANDO="leitor"
+ARQUIVO="leitor_live_site2.py"
+DEPENDENCIAS="requests"
+# ==================================
 
-echo "Instalando dependências..."
+PASTA="$HOME/$REPO"
+
 pkg update -y
-pkg install -y python
+pkg install python git -y
+[ -n "$DEPENDENCIAS" ] && pip install $DEPENDENCIAS
 
-pip install requests
+if [ -d "$PASTA" ]; then
+  cd "$PASTA" && git pull
+else
+  git clone "https://github.com/$USUARIO/$REPO.git" "$PASTA"
+fi
 
-echo "Liberando acesso ao armazenamento (aceite a permissão na tela)..."
-termux-setup-storage
-sleep 5
+echo '#!/data/data/com.termux/files/usr/bin/bash' > "$PREFIX/bin/$COMANDO"
+echo "cd $PASTA" >> "$PREFIX/bin/$COMANDO"
+echo "python $ARQUIVO" >> "$PREFIX/bin/$COMANDO"
+chmod +x "$PREFIX/bin/$COMANDO"
 
-echo "Iniciando o leitor..."
-python leitor_live_site2.py
+echo "Pronto! Digite: $COMANDO"
