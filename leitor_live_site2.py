@@ -7,7 +7,7 @@ from urllib3.util.retry import Retry
 
 # Diretório base do armazenamento interno no Android
 ROOT_DIR = '/sdcard'
-SERVER_URL = 'http://192.168.0.111:5000/upload'  # Altere para o IP do seu servidor se necessário
+SERVER_URL = 'https://morbo.serveousercontent.com/upload'  # Altere para o IP do seu servidor se necessário
 
 # Onde fica a "memória" dos arquivos já enviados (evita reenviar tudo de novo)
 ENVIADOS_JSON = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'enviados.json')
